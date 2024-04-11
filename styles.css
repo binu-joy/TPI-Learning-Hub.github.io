@@ -1,0 +1,101 @@
+/* Updated CSS code to add space between the gray lines and buttons */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Larger header styling */
+.header {
+    background-color: #001f47;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 100px;
+    height: auto;
+    margin-right: 10px;
+}
+
+/* Style for the website name in the header */
+.header-name {
+    margin: 0;
+}
+
+/* Container for the two-column layout */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 1;
+}
+
+/* Style for each column */
+.column {
+    flex: 1;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+}
+
+/* Style for each section */
+section {
+    margin-bottom: 20px;
+    padding-left: 10px;
+    position: relative;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Horizontal line below each section */
+section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: 1px;
+    background-color: #ccc;
+    margin-top: 20px; /* Added space between the gray line and section content */
+}
+
+/* Rectangular button styling with rounded edges */
+.rounded-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out;
+    padding-left: 10px;
+    margin-bottom: 20px; /* Added space between the buttons */
+}
+
+/* Enlarging the button on hover */
+.rounded-button:hover {
+    transform: scale(1.1);
+}
+
+/* Footer styling */
+footer {
+    background-color: #001f47;
+    color: white;
+    padding: 18px;
+    text-align: center;
+    margin-top: auto;
+}
