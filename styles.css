@@ -38,22 +38,22 @@ body {
 .container {
     display: flex;
     flex-wrap: wrap;
-    gap: 5px;
+    gap: 0px;
     flex: 1;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 /* Style for each column */
 .column {
     flex: 1;
     border-right: 1px solid #ccc;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 /* Style for each section */
 section {
-    margin-bottom: 20px;
-    padding-left: 10px;
+    margin-bottom: 0px;
+    padding-left: 5px;
     position: relative;
 }
 
@@ -66,7 +66,7 @@ section::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: -20px;
+    left: -30px;
     width: calc(100% + 40px);
     height: 1px;
     background-color: #ccc;
@@ -76,7 +76,7 @@ section::after {
 /* Rectangular button styling with rounded edges */
 .rounded-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-radius: 10px;
     background-color: #007bff;
     color: white;
@@ -84,13 +84,41 @@ section::after {
     margin-right: 10px;
     transition: transform 0.3s ease-in-out;
     padding-left: 10px;
-    margin-bottom: 20px; /* Added space between the buttons */
+    margin-bottom: 10px; /* Added space between the buttons */
 }
 
 /* Rectangular button styling with rounded edges */
-.rounded-button-NotReleased{
+.rounded-button-PastCourses{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-color: #0f0f0f;
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out;
+    padding-left: 10px;
+    margin-bottom: 10px; /* Added space between the buttons */
+}
+
+/* Rectangular button styling with rounded edges */
+.rounded-button-CurerntCourses{
+    display: inline-block;
+    padding: 10px 10px;
+    border-radius: 10px;
+    background-color: #89C54B;
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+    transition: transform 0.3s ease-in-out;
+    padding-left: 10px;
+    margin-bottom: 10px; /* Added space between the buttons */
+}
+
+
+.rounded-button-FutureCourses{
+    display: inline-block;
+    padding: 10px 10px;
     border-radius: 10px;
     background-color: #900c10;
     color: white;
@@ -98,9 +126,8 @@ section::after {
     margin-right: 10px;
     transition: transform 0.3s ease-in-out;
     padding-left: 10px;
-    margin-bottom: 20px; /* Added space between the buttons */
+    margin-bottom: 10px; /* Added space between the buttons */
 }
-
 
 /* Enlarging the button on hover */
 .rounded-button:hover {
