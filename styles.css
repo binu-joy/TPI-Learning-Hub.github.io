@@ -182,14 +182,14 @@ footer {
   
 /* Add a red background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #007bff;
+    background-color: #0f6cbf;
 }
   
 /* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #007bff;
+    background-color: #0f6cbf;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
