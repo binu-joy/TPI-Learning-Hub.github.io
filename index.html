@@ -1,174 +1,236 @@
-<!-- Updated HTML structure for the responsive website with a larger header, website name, and other styles -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Learning Hub Course Links</title>
-    <link rel="shortcut icon" href="assets/TPI blue fevicon.png"/>
+    <link rel="shortcut icon" href="assets/TPI_blue_favicon.png"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <!-- Larger header section with logo and website name -->
-    <header class="header">
-        <div class="logo">
-            <img src="assets/logo.png" alt="Company Logo">
-        </div>
-        <div class="header-info">
-            <h1 class="header-name">Learning Hub Course Links</h1>
-        </div>
-    </header>
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
 
-    <div class="navbar">
-        <div class="dropdown">
-          <button class="dropbtn">Exam Links
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="https://www.tpilearninghub.org.uk/course/view.php?id=765">L3 LH Exam</a>
-            <a href="https://www.tpilearninghub.org.uk/course/view.php?id=778">L4 LH Exam</a>
-            <a href="https://www.tpilearninghub.org.uk/course/view.php?id=800">L4 BTR Exam</a>
-            <a href="https://www.tpilearninghub.org.uk/course/view.php?id=861">Factoring Exam</a>
-          </div>
+    <!-- Responsive Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="Company Logo">
+            </a>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
+            <ul class="nav-menu">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Exam Links <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="https://www.tpilearninghub.org.uk/course/view.php?id=765">L3 LH Exam</a></li>
+                        <li><a href="https://www.tpilearninghub.org.uk/course/view.php?id=778">L4 LH Exam</a></li>
+                        <li><a href="https://www.tpilearninghub.org.uk/course/view.php?id=800">L4 BTR Exam</a></li>
+                        <li><a href="https://www.tpilearninghub.org.uk/course/view.php?id=861">Factoring Exam</a></li>
+                    </ul>
+                </li>
+                <!-- Dark Mode Toggle -->
+                <li><button id="dark-mode-toggle" class="dark-mode-toggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search courses...">
+        </div>
+
+        <!-- Sections Grid -->
+        <div class="sections-grid">
+            <!-- Level 2 LH -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-graduation-cap"></i> Level 2 LH</h2>
+                <div class="accordion-content">
+                    <div class="entry black-bg" data-tooltip="This is Level 2 LH course from 2020">
+                        <p>2020 (ID 59)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=59" class="course-link">Course</a> | <a href="grades_59.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Level 2 LH course from 2022">
+                        <p>2022 (ID 873)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=873" class="course-link">Course</a> | <a href="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=46">Grades</a></p>
+                    </div>
+                    <div class="entry red-bg" data-tooltip="This course is not released yet">
+                        <p>2023 (ID 946) <span class="not-released">Not Released</span></p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=946" class="course-link">Course</a> | <a href="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=49">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2 BTR -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-graduation-cap"></i> Level 2 BTR</h2>
+                <div class="accordion-content">
+                    <div class="entry black-bg" data-tooltip="This is Level 2 BTR course from 2020">
+                        <p>2020 (ID 58)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=58" class="course-link">Course</a> | <a href="grades_58.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Level 2 BTR course from 2022">
+                        <p>2022 (ID 874)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=874" class="course-link">Course</a> | <a href="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=47">Grades</a></p>
+                    </div>
+                    <div class="entry red-bg" data-tooltip="This course is not released yet">
+                        <p>2023 (ID 939) <span class="not-released">Not Released</span></p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=939" class="course-link">Course</a> | <a href="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=50">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3 LH -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-graduation-cap"></i> Level 3 LH</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is Level 3 LH course from 2021">
+                        <p>2021 (ID 813)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=813" class="course-link">Course</a> | <a href="grades_813.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Level 3 LH course from 2022">
+                        <p>2022 (ID 862)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=862" class="course-link">Course</a> | <a href="grades_862.html">Grades</a></p>
+                    </div>
+                    <div class="entry red-bg" data-tooltip="This course is scheduled for 2024">
+                        <p>2024 (ID 966) <span class="not-released">Not Released</span></p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=966" class="course-link">Course</a> | <a href="grades_966.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 4 LH -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-graduation-cap"></i> Level 4 LH</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is Level 4 LH course from 2022">
+                        <p>2022 (ID 866)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=866" class="course-link">Course</a> | <a href="grades_866.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 4 BTR -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-graduation-cap"></i> Level 4 BTR</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is Level 4 BTR course from 2021">
+                        <p>2021 (ID 844)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=844" class="course-link">Course</a> | <a href="grades_844.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Diploma in Property Factoring -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-certificate"></i> Professional Diploma in Property Factoring</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is the Professional Diploma course from 2021">
+                        <p>2021 (ID 818)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=818" class="course-link">Course</a> | <a href="grades_818.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is the Professional Diploma course from 2023">
+                        <p>2023 (ID 892)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=892" class="course-link">Course</a> | <a href="grades_892.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apprentice Level 3 -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-user-graduate"></i> Apprentice Level 3</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is Apprentice Level 3 course from 2021">
+                        <p>2021 (ID 25)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=25" class="course-link">Course</a> | <a href="grades_25.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Apprentice Level 3 course from 2022">
+                        <p>2022 (ID 863)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=863" class="course-link">Course</a> | <a href="grades_863.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Apprentice Level 3 course from 2023">
+                        <p>2023 (ID 887)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=887" class="course-link">Course</a> | <a href="grades_887.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apprentice Level 4 -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-user-graduate"></i> Apprentice Level 4</h2>
+                <div class="accordion-content">
+                    <div class="entry green-bg" data-tooltip="This is Apprentice Level 4 course from 2021">
+                        <p>2021 (ID 26)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=26" class="course-link">Course</a> | <a href="grades_26.html">Grades</a></p>
+                    </div>
+                    <div class="entry green-bg" data-tooltip="This is Apprentice Level 4 course from 2022">
+                        <p>2022 (ID 872)</p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=872" class="course-link">Course</a> | <a href="grades_872.html">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retirement Housing -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-home"></i> Retirement Housing</h2>
+                <div class="accordion-content">
+                    <div class="entry red-bg" data-tooltip="This course is not released yet">
+                        <p>2021 (ID 948) <span class="not-released">Not Released</span></p>
+                        <p><a href="#" class="course-link disabled-link">Course</a> | <a href="#">Grades</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TPI Level 2 Complaints -->
+            <div class="section">
+                <h2 class="accordion-header"><i class="fas fa-exclamation-circle"></i> TPI Level 2 Complaints</h2>
+                <div class="accordion-content">
+                    <div class="entry red-bg" data-tooltip="This course is not released yet">
+                        <p>FirstPort24 (ID 960) <span class="not-released">Not Released</span></p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=960" class="course-link">Course</a> | <a href="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=48">Grades</a></p>
+                    </div>
+                    <div class="entry red-bg" data-tooltip="This course is not released yet">
+                        <p>Bespoke24 (ID 967) <span class="not-released">Not Released</span></p>
+                        <p><a href="https://www.tpilearninghub.org.uk/course/view.php?id=967" class="course-link">Course</a> | <a href="#">Grades</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Body with three columns -->
-    <div class="container">
-        <!-- First column for sections -->
-        <div class="column">
-            <section>
-                <h2>Level 2 LH</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=59" class="rounded-button-PastCourses">2020 (ID 59)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=873" class="rounded-button-CurerntCourses">2022 (ID 873)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=946" class="rounded-button-FutureCourses">2023 (ID 946) Not Released</a>
-                </div>
-            </section>
-            <section>
-                <h2>Level 3 LH</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=813" class="rounded-button-CurerntCourses">2021 (ID 813)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=862" class="rounded-button-CurerntCourses">2022 (ID 862)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=966" class="rounded-button-FutureCourses">2024 (ID 966)</a>
-                </div>
-            </section>
-            <section>
-                <h2>Level 4 LH</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=866" class="rounded-button-CurerntCourses">2022 (ID 866)</a>
-                </div>
-            </section>
-            <section>
-                <h2>Apprentice Level 3 </h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=25" class="rounded-button-CurerntCourses">2021 (ID 25)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=862" class="rounded-button-CurerntCourses">2022 (ID 862)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=887" class="rounded-button-CurerntCourses">2023 (ID 887)</a>
-                </div>
-            </section>
-            <section>
-                <h2>Professional Diploma in Property Factoring </h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=818" class="rounded-button-CurerntCourses">2021 (ID 818)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=892" class="rounded-button-CurerntCourses">2023 (ID 892)</a>
-                </div>
-            </section>
-        </div>
-
-        <!-- Second column for sections -->
-        <div class="column">
-            <section>
-                <h2>Level 2 BTR</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=58" class="rounded-button-PastCourses">2020 (ID 58)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=874" class="rounded-button-CurerntCourses">2022 (ID 874)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=939" class="rounded-button-FutureCourses">2023 (ID 939) Not Released</a>
-                </div>
-            </section>
-            <section>
-                <h2>Level 3 BTR</h2>
-                <div class="button-container">
-                    <a href="https://website7.com" class="rounded-button-CurerntCourses">NA</a>
-                </div>
-            </section>
-            <section>
-                <h2>Level 4 BTR</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=844" class="rounded-button-CurerntCourses">2021 (ID 844)</a>
-                </div>
-            </section>
-            <section>
-                <h2>Apprentice Level 4</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=26" class="rounded-button-CurerntCourses">2021 (ID 26)</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=872" class="rounded-button-CurerntCourses">2022 (ID 872)</a>
-                </div>
-            </section>
-            <section>
-                <h2>Retirement Housing</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=948" class="rounded-button-FutureCourses">2024 (ID 948) Not Released</a>
-                </div>
-            </section>
-        </div>
-
-        <!-- Third column for new sections -->
-        <div class="column">
-            <section>
-                <h2>TPI Level 2 Complaints</h2>
-                <div class="button-container">
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=960" class="rounded-button-FutureCourses">FirstPort24 (ID 960) Not Released</a>
-                    <a href="https://www.tpilearninghub.org.uk/course/view.php?id=967" class="rounded-button-FutureCourses">Bespoke24 (ID 967) Not Released</a>
-                    <!--<a href="https://example.com" class="rounded-button">Link 2</a>
-                    <a href="https://example.com" class="rounded-button">Link 3</a>-->
-                </div>
-            </section>
-           <!--<section>
-                <h2>New Section 2</h2>
-                <div class="button-container">
-                    <a href="https://example.com" class="rounded-button">Link 1</a>
-                    <a href="https://example.com" class="rounded-button">Link 2</a>
-                    <a href="https://example.com" class="rounded-button">Link 3</a>
-                </div>
-            </section>
-            <section>
-                <h2>New Section 3</h2>
-                <div class="button-container">
-                    <a href="https://example.com" class="rounded-button">Link 1</a>
-                    <a href="https://example.com" class="rounded-button">Link 2</a>
-                </div>
-            </section>-->
-        </div>
-    </div>
-
-    <!-- Footer with address -->
+    <!-- Footer -->
     <footer>
         <p>3rd Floor, 2-4 St George's Road, Wimbledon, London, SW19 4DP</p>
     </footer>
 
-
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <!-- Botsonic Widget Script -->
     <script>
         (function (w, d, s, o, f, js, fjs) {
-        w["botsonic_widget"] = o;
-        w[o] =
-            w[o] ||
-            function () {
-            (w[o].q = w[o].q || []).push(arguments);
-            };
-        (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
-        js.id = o;
-        js.src = f;
-        js.async = 1;
-        fjs.parentNode.insertBefore(js, fjs);
+            w["botsonic_widget"] = o;
+            w[o] =
+                w[o] ||
+                function () {
+                (w[o].q = w[o].q || []).push(arguments);
+                };
+            (js = d.createElement(s)), (fjs = d.getElementsByTagName(s)[0]);
+            js.id = o;
+            js.src = f;
+            js.async = 1;
+            fjs.parentNode.insertBefore(js, fjs);
         })(window, document, "script", "Botsonic", "https://widget.botsonic.com/CDN/botsonic.min.js");
         Botsonic("init", {
-        serviceBaseUrl: "https://api-azure.botsonic.ai",
-        token: "8c7f2e5e-ff58-47f4-b525-1c8411a14f43",
+            serviceBaseUrl: "https://api-azure.botsonic.ai",
+            token: "8c7f2e5e-ff58-47f4-b525-1c8411a14f43",
         });
     </script>
 </body>
-
 </html>
