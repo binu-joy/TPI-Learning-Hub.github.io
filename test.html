@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Only View</title>
+    <style>
+        /* Hide header and navigation elements */
+        header, 
+        #region-main .path-blocks-configurable_reports,
+        .navbar,
+        .breadcrumb,
+        #page-header, /* Moodle header */
+        .block_navigation, /* Navigation block */
+        .block_adminblock, /* Administration block */
+        .usermenu,
+        #topbar,
+        #site-navigation {
+            display: none !important;
+        }
+
+        /* Make the table full-width and centred */
+        table {
+            margin: 0 auto;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        /* Set body to full screen */
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="report-frame" src="https://www.tpilearninghub.org.uk/blocks/configurable_reports/viewreport.php?id=54&courseid=1"></iframe>
+
+    <script>
+        document.getElementById('report-frame').addEventListener('load', function () {
+            try {
+                const iframeDoc = this.contentDocument || this.contentWindow.document;
+
+                // Hide unwanted elements dynamically in iframe
+                const selectors = [
+                    'header', 
+                    '.navbar', 
+                    '#page-header',
+                    '.block_navigation',
+                    '.block_adminblock',
+                    '.breadcrumb',
+                    '#topbar'
+                ];
+
+                selectors.forEach(selector => {
+                    iframeDoc.querySelectorAll(selector).forEach(el => el.style.display = 'none');
+                });
+
+                // Ensure table is styled
+                const table = iframeDoc.querySelector('table');
+                if (table) {
+                    table.style.margin = '0 auto';
+                    table.style.width = '100%';
+                    table.style.borderCollapse = 'collapse';
+                }
+
+            } catch (e) {
+                console.error('Error hiding elements in iframe:', e);
+            }
+        });
+    </script>
+</body>
+</html>
