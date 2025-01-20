@@ -373,3 +373,22 @@ body.dark-mode footer {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+.flashing {
+    font-weight: bold; /* Make it bold */
+    color: #ffffff; /* White text */
+    background-color: #ff4500; /* Bright orange background */
+    padding: 2px 6px; /* Add padding around the word */
+    border-radius: 3px; /* Rounded corners */
+    animation: flash 1s infinite; /* Apply flashing animation */
+}
+
+/* Flashing animation */
+@keyframes flash {
+    0%, 100% {
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        opacity: 0; /* Invisible */
+    }
+}
