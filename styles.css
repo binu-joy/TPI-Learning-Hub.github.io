@@ -381,6 +381,7 @@ body.dark-mode footer {
     padding: 2px 6px; /* Add padding around the word */
     border-radius: 3px; /* Rounded corners */
     animation: flash 1s infinite; /* Apply flashing animation */
+    animation-delay: 0s; /* Start all animations simultaneously */
 }
 
 /* Flashing animation */
@@ -392,3 +393,4 @@ body.dark-mode footer {
         opacity: 0; /* Invisible */
     }
 }
+
