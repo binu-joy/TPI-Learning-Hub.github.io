@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Count Tool</title>
+    <link rel="shortcut icon" href="assets/TPI_blue_favicon.png"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+        }
+
+        .input-section {
+            margin: 20px 0;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 10px auto;
+        }
+
+        #drop-area {
+            border: 2px dashed #6c63ff;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        #drop-area.highlight {
+            background-color: #e6e6ff;
+            border-color: #574fd6;
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #6c63ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #574fd6;
+        }
+
+        #wordCountResult {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: auto;
+        }
+
+        nav.navbar {
+            background-color: #002147;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        nav .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul.nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul.nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav ul.nav-menu li a:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content li a {
+            color: #333;
+            padding: 8px 12px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Responsive Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="Company Logo" height="40">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+            
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-container">
+        <h1>Word Count Tool</h1>
+        <p>Select files or a folder to count the total number of words in all <strong>.docx</strong> and <strong>.pdf</strong> files.</p>
+
+        <div class="input-section">
+            <h3>Select Files:</h3>
+            <input type="file" id="fileInput" multiple accept=".docx,.pdf">
+        </div>
+
+        <div class="input-section">
+            <h3>Select Folder:</h3>
+            <input type="file" id="folderInput" webkitdirectory directory multiple>
+        </div>
+
+        <div class="input-section">
+            <h3>Or Drag & Drop Files Here:</h3>
+            <div id="drop-area">Drop files here</div>
+        </div>
+
+        <button onclick="processFiles()">Count Words</button>
+        <p id="wordCountResult"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>3rd Floor, 2-4 St George's Road, Wimbledon, London, SW19 4DP</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+    <script>
+        let allFiles = [];
+
+        // Drag & Drop Area
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('highlight');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('highlight');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('highlight');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        // Handle Files from Input or Drop
+        function handleFiles(files) {
+            allFiles = Array.from(files);
+            alert(`${allFiles.length} file(s) selected.`);
+        }
+
+        // Process Files (Count Words)
+        async function processFiles() {
+            const fileInput = document.getElementById('fileInput');
+            const folderInput = document.getElementById('folderInput');
+            const resultElement = document.getElementById('wordCountResult');
+
+            let filesToProcess = [];
+
+            if (fileInput.files.length) {
+                filesToProcess = Array.from(fileInput.files);
+            } else if (folderInput.files.length) {
+                filesToProcess = Array.from(folderInput.files);
+            } else if (allFiles.length) {
+                filesToProcess = allFiles;
+            } else {
+                alert("Please select files or a folder first.");
+                return;
+            }
+
+            let totalWords = 0;
+
+            for (const file of filesToProcess) {
+                const fileName = file.name.toLowerCase();
+
+                if (fileName.endsWith('.docx')) {
+                    totalWords += await countWordsInDocx(file);
+                } else if (fileName.endsWith('.pdf')) {
+                    totalWords += await countWordsInPdf(file);
+                }
+            }
+
+            resultElement.innerText = `Total Words: ${totalWords}`;
+        }
+
+        // Count Words in DOCX
+        function countWordsInDocx(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    mammoth.extractRawText({ arrayBuffer: event.target.result })
+                        .then(result => {
+                            const wordCount = result.value.trim().split(/\s+/).length;
+                            resolve(wordCount);
+                        })
+                        .catch(() => resolve(0));
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        // Count Words in PDF
+        function countWordsInPdf(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = async function(event) {
+                    const typedArray = new Uint8Array(event.target.result);
+                    const pdf = await pdfjsLib.getDocument(typedArray).promise;
+                    let text = "";
+
+                    for (let i = 0; i < pdf.numPages; i++) {
+                        const page = await pdf.getPage(i + 1);
+                        const content = await page.getTextContent();
+                        text += content.items.map(item => item.str).join(' ');
+                    }
+                    const wordCount = text.trim().split(/\s+/).length;
+                    resolve(wordCount);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+    </script>
+</body>
+</html>
