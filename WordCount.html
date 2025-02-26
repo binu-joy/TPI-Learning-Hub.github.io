@@ -2,14 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Count Tool</title>
     <link rel="shortcut icon" href="assets/TPI_blue_favicon.png"/>
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -93,16 +98,19 @@
             margin-top: auto;
         }
 
+        /* Navigation Bar */
         nav.navbar {
-            background-color: #002147;
-            color: white;
-            padding: 10px 20px;
+            background-color: #001f47;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         nav .navbar-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 15px 10px 13px;
         }
 
         nav ul.nav-menu {
@@ -148,6 +156,7 @@
     </style>
 </head>
 <body>
+
     <!-- Back to Top Button -->
     <button id="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
 
@@ -155,11 +164,17 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="#" class="logo">
-                <img src="assets/logo.png" alt="Company Logo" height="40">
+                <img src="assets/logo.png" alt="Company Logo">
             </a>
+            <input type="checkbox" id="menu-toggle">
+            <label for="menu-toggle" class="menu-icon"><i class="fas fa-bars"></i></label>
             <ul class="nav-menu">
                 <li><a href="index.html">Home</a></li>
-            
+                <li class="dropdown">
+                    <ul class="dropdown-content">
+                        <li><a href="WordCount.html">Word Count</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -194,13 +209,12 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js" defer></script>
 
     <script>
         let allFiles = [];
 
-        // Drag & Drop Area
         const dropArea = document.getElementById('drop-area');
 
         dropArea.addEventListener('dragover', (e) => {
@@ -218,82 +232,35 @@
             handleFiles(e.dataTransfer.files);
         });
 
-        // Handle Files from Input or Drop
         function handleFiles(files) {
             allFiles = Array.from(files);
             alert(`${allFiles.length} file(s) selected.`);
         }
 
-        // Process Files (Count Words)
         async function processFiles() {
             const fileInput = document.getElementById('fileInput');
             const folderInput = document.getElementById('folderInput');
             const resultElement = document.getElementById('wordCountResult');
 
-            let filesToProcess = [];
+            let filesToProcess = [...fileInput.files, ...folderInput.files, ...allFiles];
 
-            if (fileInput.files.length) {
-                filesToProcess = Array.from(fileInput.files);
-            } else if (folderInput.files.length) {
-                filesToProcess = Array.from(folderInput.files);
-            } else if (allFiles.length) {
-                filesToProcess = allFiles;
-            } else {
+            if (!filesToProcess.length) {
                 alert("Please select files or a folder first.");
                 return;
             }
 
             let totalWords = 0;
-
             for (const file of filesToProcess) {
-                const fileName = file.name.toLowerCase();
-
-                if (fileName.endsWith('.docx')) {
+                if (file.name.toLowerCase().endsWith('.docx')) {
                     totalWords += await countWordsInDocx(file);
-                } else if (fileName.endsWith('.pdf')) {
+                } else if (file.name.toLowerCase().endsWith('.pdf')) {
                     totalWords += await countWordsInPdf(file);
                 }
             }
 
             resultElement.innerText = `Total Words: ${totalWords}`;
         }
-
-        // Count Words in DOCX
-        function countWordsInDocx(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    mammoth.extractRawText({ arrayBuffer: event.target.result })
-                        .then(result => {
-                            const wordCount = result.value.trim().split(/\s+/).length;
-                            resolve(wordCount);
-                        })
-                        .catch(() => resolve(0));
-                };
-                reader.readAsArrayBuffer(file);
-            });
-        }
-
-        // Count Words in PDF
-        function countWordsInPdf(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = async function(event) {
-                    const typedArray = new Uint8Array(event.target.result);
-                    const pdf = await pdfjsLib.getDocument(typedArray).promise;
-                    let text = "";
-
-                    for (let i = 0; i < pdf.numPages; i++) {
-                        const page = await pdf.getPage(i + 1);
-                        const content = await page.getTextContent();
-                        text += content.items.map(item => item.str).join(' ');
-                    }
-                    const wordCount = text.trim().split(/\s+/).length;
-                    resolve(wordCount);
-                };
-                reader.readAsArrayBuffer(file);
-            });
-        }
     </script>
+
 </body>
 </html>
