@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Resizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+      background: #f4f4f4;
+    }
+    input[type="file"] {
+      margin: 20px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    #progressBarContainer {
+      width: 60%;
+      margin: 20px auto;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+    }
+    #progressBar {
+      width: 0%;
+      height: 100%;
+      background: #4CAF50;
+      transition: width 0.3s;
+    }
+    #status {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Select a folder of images to resize</h2>
+  <input type="file" id="input" webkitdirectory multiple>
+  
+  <div id="progressBarContainer">
+    <div id="progressBar"></div>
+  </div>
+
+  <p id="status">No images processed yet.</p>
+  <button id="downloadZip" disabled>Download All as ZIP</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script>
+    const input = document.getElementById('input');
+    const status = document.getElementById('status');
+    const downloadBtn = document.getElementById('downloadZip');
+    const progressBar = document.getElementById('progressBar');
+    const zip = new JSZip();
+
+    input.addEventListener('change', async (event) => {
+      const files = Array.from(event.target.files);
+      const images = files.filter(f => f.type.startsWith('image/'));
+      if (images.length === 0) {
+        status.textContent = "❌ No images found in selected folder.";
+        return;
+      }
+
+      let count = 0;
+      for (const file of images) {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        await img.decode();
+
+        const canvas = document.createElement('canvas');
+        const scale = 500 / img.width;
+        canvas.width = 500;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.9));
+        const newName = file.name.replace(/(\.[^.]+)$/, '-compressed$1');
+        zip.file(newName, blob);
+
+        count++;
+        const percent = Math.round((count / images.length) * 100);
+        progressBar.style.width = percent + '%';
+        status.textContent = `Processed ${count} of ${images.length} images...`;
+      }
+
+      status.textContent = `✅ Resized ${count} images. Ready to download.`;
+      downloadBtn.disabled = false;
+    });
+
+    downloadBtn.addEventListener('click', () => {
+      zip.generateAsync({ type: 'blob' }).then(content => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(content);
+        a.download = 'resized-images.zip';
+        a.click();
+      });
+    });
+  </script>
+
+</body>
+</html>
