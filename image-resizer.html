@@ -3,34 +3,118 @@
 <head>
   <meta charset="UTF-8">
   <title>Dashboard Image Optimiser</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="assets/TPI_blue_favicon.png" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      padding: 40px;
-      background: #f4f4f4;
     }
+
+    /* Navbar Styles */
+    nav.navbar {
+      background-color: #001f47;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .navbar-container {
+      max-width: 100%;
+      margin: auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .logo img {
+      max-height: 40px;
+    }
+
+    .nav-toggle {
+      display: none;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-menu li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .nav-menu li a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        flex-direction: column;
+        width: 100%;
+        display: none;
+        margin-top: 10px;
+        background: #001f47;
+        padding-bottom: 10px;
+      }
+
+      .nav-menu.show {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+    }
+
+    /* Page Content */
+    h2 {
+      margin-top: 30px;
+      font-size: 24px;
+      color: #333;
+    }
+
     .description {
       background: #fff;
       border: 1px solid #ccc;
       padding: 20px;
-      margin-bottom: 30px;
+      margin: 30px auto;
       width: 80%;
       max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
       border-radius: 10px;
       text-align: left;
     }
+
     input[type="file"] {
       margin: 10px 0;
     }
+
     button {
       padding: 10px 20px;
       font-size: 16px;
       margin-top: 20px;
       cursor: pointer;
     }
+
     #progressBarContainer {
       width: 60%;
       margin: 20px auto;
@@ -39,21 +123,25 @@
       overflow: hidden;
       height: 20px;
     }
+
     #progressBar {
       width: 0%;
       height: 100%;
       background: #4CAF50;
       transition: width 0.3s;
     }
+
     #status {
       margin-top: 15px;
     }
+
     #imageList {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 30px;
     }
+
     .thumb {
       margin: 10px;
       padding: 10px;
@@ -61,12 +149,14 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+
     .thumb img {
       max-width: 200px;
       height: auto;
       display: block;
       margin-bottom: 8px;
     }
+
     .thumb a {
       display: inline-block;
       padding: 6px 12px;
@@ -79,8 +169,23 @@
 </head>
 <body>
 
+  <!-- Responsive Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png" alt="The Property Institute Logo">
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Tool Title -->
   <h2>Dashboard Image Optimiser</h2>
 
+  <!-- Description Box -->
   <div class="description">
     <p><strong>Purpose:</strong> This tool is designed to resize and compress images to optimise performance in dashboards and web applications. By reducing file sizes, you help ensure faster load times and a smoother user experience.</p>
 
@@ -90,25 +195,26 @@
       <li>Each image will be automatically resized to <strong>500px width</strong> (preserving aspect ratio) and compressed directly in your browser.</li>
       <li>Preview and download optimised images individually, or download all at once in a ZIP file.</li>
     </ol>
-
     <p><em>⚠️ All processing is done locally in your browser. No images are uploaded to any server.</em></p>
   </div>
 
+  <!-- Image Upload Inputs -->
   <p><strong>Select individual images:</strong></p>
   <input type="file" id="inputFiles" multiple accept="image/*"><br>
-
   <p><strong>Or select a folder of images:</strong></p>
   <input type="file" id="inputFolder" webkitdirectory multiple><br>
 
+  <!-- Progress UI -->
   <div id="progressBarContainer">
     <div id="progressBar"></div>
   </div>
-
   <p id="status">No images processed yet.</p>
   <button id="downloadZip" disabled>Download All as ZIP</button>
 
+  <!-- Image Thumbnails -->
   <div id="imageList"></div>
 
+  <!-- JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
     const zip = new JSZip();
@@ -181,6 +287,11 @@
         a.download = 'resized-images.zip';
         a.click();
       });
+    });
+
+    // Mobile nav toggle
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navMenu').classList.toggle('show');
     });
   </script>
 
