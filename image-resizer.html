@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Image Resizer</title>
+  <title>Dashboard Image Optimiser</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,8 +10,20 @@
       padding: 40px;
       background: #f4f4f4;
     }
+    .description {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 30px;
+      width: 80%;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+      text-align: left;
+    }
     input[type="file"] {
-      margin: 20px 0;
+      margin: 10px 0;
     }
     button {
       padding: 10px 20px;
@@ -36,13 +48,58 @@
     #status {
       margin-top: 15px;
     }
+    #imageList {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+    .thumb {
+      margin: 10px;
+      padding: 10px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .thumb img {
+      max-width: 200px;
+      height: auto;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .thumb a {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #2196F3;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Select a folder of images to resize</h2>
-  <input type="file" id="input" webkitdirectory multiple>
-  
+  <h2>Dashboard Image Optimiser</h2>
+
+  <div class="description">
+    <p><strong>Purpose:</strong> This tool is designed to resize and compress images to optimise performance in dashboards and web applications. By reducing file sizes, you help ensure faster load times and a smoother user experience.</p>
+
+    <p><strong>How to use:</strong></p>
+    <ol>
+      <li>Select <strong>individual image files</strong> or an <strong>entire folder</strong> of images using the options below.</li>
+      <li>Each image will be automatically resized to <strong>500px width</strong> (preserving aspect ratio) and compressed directly in your browser.</li>
+      <li>Preview and download optimised images individually, or download all at once in a ZIP file.</li>
+    </ol>
+
+    <p><em>⚠️ All processing is done locally in your browser. No images are uploaded to any server.</em></p>
+  </div>
+
+  <p><strong>Select individual images:</strong></p>
+  <input type="file" id="inputFiles" multiple accept="image/*"><br>
+
+  <p><strong>Or select a folder of images:</strong></p>
+  <input type="file" id="inputFolder" webkitdirectory multiple><br>
+
   <div id="progressBarContainer">
     <div id="progressBar"></div>
   </div>
@@ -50,21 +107,27 @@
   <p id="status">No images processed yet.</p>
   <button id="downloadZip" disabled>Download All as ZIP</button>
 
+  <div id="imageList"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script>
-    const input = document.getElementById('input');
+    const zip = new JSZip();
     const status = document.getElementById('status');
     const downloadBtn = document.getElementById('downloadZip');
     const progressBar = document.getElementById('progressBar');
-    const zip = new JSZip();
+    const imageList = document.getElementById('imageList');
 
-    input.addEventListener('change', async (event) => {
-      const files = Array.from(event.target.files);
-      const images = files.filter(f => f.type.startsWith('image/'));
+    async function handleFiles(fileList) {
+      const images = Array.from(fileList).filter(f => f.type.startsWith('image/'));
       if (images.length === 0) {
-        status.textContent = "❌ No images found in selected folder.";
+        status.textContent = "❌ No image files selected.";
         return;
       }
+
+      zip.files = {};
+      imageList.innerHTML = '';
+      progressBar.style.width = '0%';
+      downloadBtn.disabled = true;
 
       let count = 0;
       for (const file of images) {
@@ -84,6 +147,15 @@
         const newName = file.name.replace(/(\.[^.]+)$/, '-compressed$1');
         zip.file(newName, blob);
 
+        const imgURL = URL.createObjectURL(blob);
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb';
+        thumb.innerHTML = `
+          <img src="${imgURL}" alt="${newName}">
+          <a href="${imgURL}" download="${newName}">Download</a>
+        `;
+        imageList.appendChild(thumb);
+
         count++;
         const percent = Math.round((count / images.length) * 100);
         progressBar.style.width = percent + '%';
@@ -92,6 +164,14 @@
 
       status.textContent = `✅ Resized ${count} images. Ready to download.`;
       downloadBtn.disabled = false;
+    }
+
+    document.getElementById('inputFiles').addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    document.getElementById('inputFolder').addEventListener('change', (e) => {
+      handleFiles(e.target.files);
     });
 
     downloadBtn.addEventListener('click', () => {
